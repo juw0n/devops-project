@@ -5,12 +5,35 @@
   become_method: sudo
   remote_user: ubuntu
   tasks:
-    #  - import_tasks: chapter2/pam_pwquality.yml
-    #  - import_tasks: chapter2/user_and_group.yml
-    #  - import_tasks: chapter3/authorized_keys.yml
-    #  - import_tasks: chapter3/two_factor.yml
-    #  - import_tasks: chapter4/web_application.yml
-    #  - import_tasks: chapter4/sudoers.yml
-    #  - import_tasks: chapter5/firewall.yml
+    # Ensure repositories are updated
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    # Enable universe repository (if needed)
+    - name: Enable universe repository
+      apt_repository:
+        repo: 'deb http://archive.ubuntu.com/ubuntu/ {{ ansible_distribution_release | lower }} universe'
+        state: present
+      when: ansible_distribution == 'Ubuntu'
+      
+    # Install pip3 if not already installed
+    - name: Install python3-pip
+      apt:
+        name: python3-pip
+        state: present
+    # Install passlib using pip
+    - name: Install passlib to hash or encrypt a password
+      pip:
+        name: passlib
+        state: present
+
+    - import_tasks: chapter-2/pam_pwquality.yaml
+    - import_tasks: chapter-2/user_and_group.yaml
+  #  - import_tasks: chapter-3/authorized_keys.yaml
+  #  - import_tasks: chapter-3/two_factor.yaml
+  #  - import_tasks: chapter-4/web_application.yaml
+  #  - import_tasks: chapter-4/sudoers.yaml
+  #  - import_tasks: chapter-5/firewall.yaml
   handlers:
     #  - import_tasks: handlers/restart_ssh.yml

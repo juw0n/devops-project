@@ -1,0 +1,36 @@
+# - name: Configure User, Group, and Files
+#   hosts: all
+#   become: yes
+#   tasks:
+- name: Ensure group "devops" exists
+  group:
+    name: devops
+    state: present
+
+- name: Create the user 'jaywon' and assign to 'devops' group
+  user:
+    name: jaywon
+    groups: devops
+    append: yes
+    shell: /bin/bash
+    state: present
+    password: "{{ 'TempPass@123' | password_hash('sha512') }}"
+
+- name: Create a directory named 'engineering'
+  file:
+    path: /home/jaywon/engineering
+    state: directory
+    owner: jaywon
+    group: devops
+    mode: '0750'
+
+- name: Force user 'jaywon' to change password on first login
+  command: chage -d 0 jaywon
+
+- name: Create a file inside the 'engineering' directory
+  file:
+    path: /home/jaywon/engineering/info.txt
+    state: touch
+    owner: jaywon
+    group: devops
+    mode: '0770'
