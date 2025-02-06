@@ -29,5 +29,8 @@ The -C flag adds a human-readable comment to the end of the key that can help id
 To copy the ssh public key to the remote server with Ansible, we use the authorized_key module. This module is use to copy your public key from the local host over to a user on the VM.
 
 #### Adding Two-Factor Authentication
-Security is built in layers. The more layers you have, the harder it is for
-an intruder to gain access.
+Security is built in layers. The more layers you have, the harder it is for an intruder to gain access. which is why we will be adding two-factor authentication (2FA), which validates a user’s identity by using credentials and something that the user has. The main goal of 2FA is to make it harder for someone identity if password or key is compromised.
+Two-factor authentication relies on the user providing two out of these three things: 
+==> Something they know: password or pin
+==> Something they have: phone or hardware authentication device (Software or Hardware)
+==> Something they are: fingerprint or voice (Biometric)

@@ -7,7 +7,7 @@ Enforcing complicated passwords on all hosts that users can access is necessary 
 We use code to enforce strong passwords for all users.
 
 Ansible modules are units of code that can control system resources or execute system commands on an OS, such as enabling a firewall, managing users, or installing software. Ansible provides a module library that you can execute directly on remote hosts or through playbooks.
-e.g., modules are package, lineinfile, user, group, and file etc
+e.g., modules are: package, lineinfile, copy, apt (for ubuntu), user, group, and file etc
 
 Similar to modules are plugins, which are pieces of code that extend core Ansible functionality. Ansible uses a plugin architecture to enable a rich, flexible, and expandable feature set.
 
