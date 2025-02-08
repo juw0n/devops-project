@@ -33,3 +33,13 @@ In Linux systems, there are three types of user
 3. Root user: A root user (or superuser) account has unrestricted access to the operating system. It usually has a UID of zero(0)
 
 To create and manage users and groups using Ansible, you use the User and group Module
+
+#### Password generation
+I used a combination of two command line applications, pwgen and mkpasswd, to create the complex password. The pwgen command can generate secure passwords, and the mkpasswd command can generate passwords using different hashing algorithms. The pwgen application is provided by the pwgen package, and the mkpasswd application is provided by a package named whois. Together, these tools can generate the hash that Ansible and Linux expect.
+
+Linux stores password hashes in a file called shadow. On an Ubuntu system, the password hashing algorithm is SHA-512 by default. To create the SHA-512 hash for Ansible’s user module, i used the following command on the Host Ubuntu:
+
+==> $ sudo apt update
+==> $ sudo apt install pwgen whois
+==> $ pass=`pwgen --secure --capitalize --numerals --symbols 12 1`
+==> $ echo $pass | mkpasswd --stdin --method=sha-512; echo $pass

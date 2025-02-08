@@ -33,4 +33,4 @@ Security is built in layers. The more layers you have, the harder it is for an i
 Two-factor authentication relies on the user providing two out of these three things: 
 ==> Something they know: password or pin
 ==> Something they have: phone or hardware authentication device (Software or Hardware)
-==> Something they are: fingerprint or voice (Biometric)
+==> Something they are: fingerprint or voice (Biometric)s
