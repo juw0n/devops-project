@@ -21,13 +21,13 @@
 
 #     # The negative values in the configuration line above inform pam_pwquality that it must have at least “one of” for that category.
 
-# - name: Ensure PAM uses pwquality for password enforcement
-#   lineinfile:
-#     path: /etc/pam.d/common-password
-#     regexp: '^password\s+requisite\s+pam_pwquality.so'
-#     line: "password requisite pam_pwquality.so retry=3"
-#     state: present
-#   when: ansible_os_family == "Debian"
+- name: Ensure PAM uses pwquality for password enforcement
+  lineinfile:
+    path: /etc/pam.d/common-password
+    regexp: '^password\s+requisite\s+pam_pwquality.so'
+    line: "password requisite pam_pwquality.so retry=3"
+    state: present
+  when: ansible_os_family == "Debian"
 
 - name: Configure pam_pwquality
   lineinfile:

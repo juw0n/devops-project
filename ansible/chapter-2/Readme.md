@@ -43,3 +43,5 @@ Linux stores password hashes in a file called shadow. On an Ubuntu system, the p
 ==> $ sudo apt install pwgen whois
 ==> $ pass=`pwgen --secure --capitalize --numerals --symbols 12 1`
 ==> $ echo $pass | mkpasswd --stdin --method=sha-512; echo $pass
+
+The last command display the hash password and the real password for jaywon user.

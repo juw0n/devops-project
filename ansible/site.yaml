@@ -9,8 +9,8 @@
     - import_tasks: chapter-2/user_and_group.yaml
     - import_tasks: chapter-3/authorized_keys.yaml
     - import_tasks: chapter-3/two_factor_auth.yaml
-  #  - import_tasks: chapter-4/web_application.yaml
-  #  - import_tasks: chapter-4/sudoers.yaml
+    - import_tasks: chapter-4/web_application.yaml
+    - import_tasks: chapter-4/sudoers.yaml
   #  - import_tasks: chapter-5/firewall.yaml
   handlers:
      - import_tasks: handlers/restart_ssh.yaml
