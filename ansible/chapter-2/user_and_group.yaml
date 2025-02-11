@@ -16,7 +16,7 @@
   file:
     path: /opt/engineering
     state: directory
-    owner: jaywon
+    owner: root
     group: devops
     mode: '0750'
 

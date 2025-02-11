@@ -15,3 +15,19 @@ that is useful for keeping the configuration clear and concise when there is a l
 => Runas_Alias  A list of users or groups a command can be run as
 => Cmnd_Alias  Specifies a command or multiple commands
 => User_Alias  A user or group of users
+
+The sudoedit command (or sudo -e) is designed to allow users to edit files with elevated privileges (e.g., as root) while enforcing strict security policies to prevent misuse or privilege escalation.
+PS: Read about sudoedit's security policy
+
+One of the policies that help in controlling user command with sudo to prevent security risks:
+
+1. Directory and File Ownership Checks
+Directory Ownership: The parent directory of the file being edited must not be writable by the current user. If the directory is writable, sudoedit will block the edit to prevent tampering.
+
+2. File Ownership: The file itself must not be writable by the current user. If the file is writable, sudoedit will block the edit.
+(The directories and files should be owned by root or another privileged user)
+
+Conclusion:
+I explored the importance of allowing users to run commands with elevated privileges. Using Ansible, the sudo command, and a sudoers file, you can restrict command access and log an audit trail for security.
+I also worked with some different Ansible modules like template (The Ansible template module is useful for creating files that will require some modification with variables. The template module creates files using the Jinja2 template engine for Python templates.), systemd (This module is used for checking and modifying system and applications services), and set_fact (This module allows the setting of host variables that can be used in a task or across a playbook.), which allowed you to automate the installation of your web applica-
+tion and control its life cycle.
