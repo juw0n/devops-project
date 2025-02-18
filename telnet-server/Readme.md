@@ -42,3 +42,39 @@ To get a real-time update on the resources a container is using (like top in lin
 To see all the logs in a container
 ==> docker logs <container-name>
 
+
+### Orchestrating with Kubernetes
+Kubernetes is the standard in container orchestration. One or more worker nodes and one or more control plane nodes make up a Kubernetes cluster. A Raspberry Pi, bare-metal racked server, or cloud virtual machine can all be considered nodes. The cluster status, container scheduling, and Kubernetes API requests are all managed by the control plane nodes. The control plane is where the main services (such the scheduler,etcd, and API) operate. The worker nodes execute the resources and containers that the control plane schedules.
+
+Containers are able to communicate with one another both inside and outside the cluster . This occurs while operating a web server that is visible to the public or when microservices are used for internal communication.
+
+A worker node can be configured for a particular use case, such as high connections, and rules can be made to guarantee that the apps that require that functionality are installed on that worker node. This is refer to nodeAffinity.
+
+#### Kubernetes Workload Resources
+An object type that contains state and intent is called a resource. Kubernetes resources are defined in a file called a manifest
+Pods: They are smallest building elements of Kubernetes, and serve as the basis for all the exciting container-related endeavours. Each container can connect to the other containers, and all containers can share a directory between them by a mounted volume.
+
+ReplicaSet: A ReplicaSet resource is used to maintain a fixed number of identical Pods. If a Pod is killed or deleted, the ReplicaSet will create another Pod to take its place.
+
+Deployments: A Deployment is a resource that manages Pods and ReplicaSets. A Deployment’s main job is to maintain the state that is configured in its manifest. It controls a Pod’s lifecycle—from creation, to updates, to scaling, deletion. You can also roll back to earlier versions of a Deployment if
+needed.
+
+StatefulSets: A StatefulSet is a resource for managing stateful applications, such as PostgreSQL, ElasticSearch, and etcd. Similar to a Deployment, it can manage the state of Pods defined in a manifest. Each Pod in a StatefulSet has its own state and data bound to it. If you are adding a stateful application to your cluster, choose a StatefulSet over a Deployment.
+
+Services: Services allow you to expose applications running in a Pod or group of Pods within the Kubernetes cluster or over the internet.
+service types include:
+1. ClusterIP:  This is the default type when you create a Service. It is assigned an internal routable IP address that proxies connections to one or more Pods. You can access a ClusterIP only from within the Kubernetes cluster.
+2. Headless  This does not create a single-service IP address. It is not load balanced.
+3. NodePort  This exposes the Service on the node’s IP addresses and port.
+4. LoadBalancer  This exposes the Service externally. It does this either by using a cloud provider’s component, like AWS’s Elastic Load Balancing (ELB), or a bare-metal solution, like MetalLB.
+5. ExternalName  This maps a Service to the contents of the externalName field to a CNAME record with its value.
+
+Volumes: A Volume is basically a directory, or a file, that all containers in a Pod can access, with some caveats. Volumes provide a way for containers to share and store data between them. If a container in a Pod is killed, the Volume and its data will survive; if the entire Pod is killed, the Volume and its contents will be removed. Thus, if you need storage that is not linked to a Pod’s lifecycle, use a Persistent Volume (PV) for your application. A PV is a resource in a cluster just like a node. Pods can use the PV resource, but the PV does
+not terminate when the Pod does. If your Kubernetes cluster is running in AWS, you can use Amazon Elastic Block Storage (Amazon EBS) as your PV. This makes Pod catastrophes easier to survive.
+
+Secrets: Secrets are convenient resources for safely and reliably sharing sensitive information (such as passwords, tokens, SSH keys, and API keys) with Pods. You can access Secrets either via environment variables or as a Volume
+mount inside a Pod.
+
+ConfigMaps: Mounting nonsensitive configuration files inside a container is made possible using ConfigMaps. The ConfigMap can be accessed by a pod's containers as a file in a Volume mount, an environment variable, or command line arguments. There are two primary advantages to including any configuration files your application may have in a ConfigMap manifest. First, you don't need to relaunch your entire application in order to update or publish a new manifest file. Second, your application will be able to reload the configuration without requiring a restart if it is programmatically designed to monitor changes in a configuration file.
+
+Namespaces: A Kubernetes cluster can be split up into multiple smaller virtual clusters using the Namespace resource. Even if the resources may be located on the same nodes, a Namespace gives them a logical distinction. A resource will inherit the witty default Namespace if you don't provide a Namespace when establishing it.

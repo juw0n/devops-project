@@ -1,4 +1,4 @@
-### AUTO MATING AND TESTING A HOST- BASED FIREWALL
+### AUTOMATING AND TESTING A HOST- BASED FIREWALL
 
 Opening ports for services like SSH or web servers is a required and acceptable risk for software or DevOps developers. That does not imply, however, that we should disregard any additional traffic going to our host. We must filter all other traffic and make informed decisions about what goes in and out in order to minimise threats. As a result, we employ firewalls to keep an eye on all packets coming in and leave a network or server.
 
