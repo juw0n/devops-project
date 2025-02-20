@@ -20,6 +20,7 @@ CMD gives the container a default command or set of parameters (it can be used w
 To build and run the docker image created for this project, run the following:
 To build from dockerfile
 ==> docker build -t devops-vm/telnet-server:v1 .
+==> docker run -p 2323:2323 -d --name telnet-server devops-vm/telnet-server:v1
 To list existing image
 ==> docker image ls
 To list running and non-running container
@@ -78,3 +79,11 @@ mount inside a Pod.
 ConfigMaps: Mounting nonsensitive configuration files inside a container is made possible using ConfigMaps. The ConfigMap can be accessed by a pod's containers as a file in a Volume mount, an environment variable, or command line arguments. There are two primary advantages to including any configuration files your application may have in a ConfigMap manifest. First, you don't need to relaunch your entire application in order to update or publish a new manifest file. Second, your application will be able to reload the configuration without requiring a restart if it is programmatically designed to monitor changes in a configuration file.
 
 Namespaces: A Kubernetes cluster can be split up into multiple smaller virtual clusters using the Namespace resource. Even if the resources may be located on the same nodes, a Namespace gives them a logical distinction. A resource will inherit the witty default Namespace if you don't provide a Namespace when establishing it.
+
+Use Minikube's Docker Daemon
+To make sure your locally built image is accessible, build the image inside Minikube's Docker daemon:
+==> eval $(minikube docker-env)
+==> docker build -t devops-vm/telnet-server:v1 .
+
+Scaling a Pod (To scale the deployment to 3)
+==> kubectl scale --current-replicas=2 --replicas=3 deployment/telnet-server
