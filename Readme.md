@@ -17,7 +17,10 @@ This project demonstrates the implementation of core DevOps practices to automat
 - **Kubernetes**: For deploying and managing containerized applications.
 - **Prometheus**: For monitoring and alerting.
 
+## Skills: 
+**DevOps, **Vagrant, **Ansible, **Git, CI/CD, Docker, Kubernetes, Linux System Administration, Bash Scripting, Infrastructure as Code (IaC), Security Best Practices.
+
 ## How to Use
 1. Clone the repository:
    ```bash
-   git clone https://github.com/juw0n/devops-for-the-desperate/devops-project.git
+   git clone https://github.com/juw0n/devops-project.git
