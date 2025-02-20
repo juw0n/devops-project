@@ -4,7 +4,7 @@ This project demonstrates the implementation of core DevOps practices to automat
 
 This is my study and documentation as i read and study the Book #DEVOPS FOR THE DESPERATE-A Hands-on Survival Guide written by Bradley Smith @2022. 
 
-Companion Repository: (https://github.com/bradleyd/devops_for_the_desperate)
+Companion Repository: https://github.com/bradleyd/devops_for_the_desperate
 
 ## Key Features
 - **Infrastructure as Code (IaC)**: Automated development environment setup using Vagrant.
