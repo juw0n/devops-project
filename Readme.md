@@ -6,7 +6,7 @@ This is my study and documentation as i read and study the Book #DEVOPS FOR THE 
 
 Companion Repository: https://github.com/bradleyd/devops_for_the_desperate
 
-## Key Features
+## Key Features:
 - **Infrastructure as Code (IaC)**: Automated development environment setup using Vagrant.
 - **Configuration Management**: Managed server configurations and deployed applications using Ansible.
 - **CI/CD Pipelines**: Set up automated testing and deployment pipelines.

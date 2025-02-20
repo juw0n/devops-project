@@ -1,6 +1,3 @@
-This is my study and documentation repo as i read and study the Book #DEVOPS FOR THE DESPERATE-A Hands-on Survival Guide written by Bradley Smith @2022
-
-Companion Repository: https://github.com/bradleyd/devops_for_the_desperate
 ==========================================================================
 Chapter 1 - Setting Up virtual Machine
 
@@ -8,7 +5,6 @@ Chapter 1 - Setting Up virtual Machine
 1. Creating VM - Tools: Vagrant
 2. Configuring VM. Tools: Ansible
 
-<!-- PS: -->
 Infrastructure as code (IaC): It is the process of using code to describe and manage infrastructure like VMs, network switches, and cloud resources such as Amazon Relational Database Service (RDS). e.g of tools are: vagrant
 
 Configuration Management (CM): It is the process of configuring those resources for a specific purpose in a predictable, repeatable manner. e.g of tools are: Ansible
