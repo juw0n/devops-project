@@ -18,7 +18,7 @@ This project demonstrates the implementation of core DevOps practices to automat
 - **Prometheus**: For monitoring and alerting.
 
 ## Skills: 
-**DevOps,** **Vagrant,** **Ansible,** **Git, CI/CD, Docker, Kubernetes, Linux System Administration, Bash Scripting, Infrastructure as Code (IaC), Security Best Practices.
+**DevOps**, **Vagrant**, **Ansible**, **Git**, **CI/CD**, **Docker**, **Kubernetes**, **Linux System Administration**, **Bash Scripting**, **Infrastructure as Code (IaC)**, **Security Best Practices.**
 
 ## How to Use
 1. Clone the repository:
