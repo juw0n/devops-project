@@ -102,5 +102,6 @@ During the CD step, artifact(container image) is extracted from a repository and
 Following a successful deployment, the new code needs to be observed in a monitoring step to ensure that nothing has escaped the CI process.
 #### Setting Up My Pipeline
 For creating pipeline for this project, i will be using two tools:
-i. Skaffold: For continuous development for Kubernetes native applications. (https://skaffold.dev/docs/install/)
-ii. Container-structure-test: This command-line tool verifies the structure of the container image after it has been created. It can verify whether a particular file exists or run a command and check the results to see if the image was built correctly. It can also be used to confirm that the ports and environment variables that was provide in a Dockerfile were included in the container image. (https://github.com/GoogleContainerTools/container-structure-test/)
+1. Skaffold: For continuous development for Kubernetes native applications. (https://skaffold.dev/docs/install/)
+2. Container-structure-test: This command-line tool verifies the structure of the container image after it has been created. It can verify whether a particular file exists or run a command and check the results to see if the image was built correctly. It can also be used to confirm that the ports and environment variables that was provide in a Dockerfile were included in the container image. (https://github.com/GoogleContainerTools/container-structure-test/)
+

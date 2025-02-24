@@ -49,7 +49,7 @@ func banner() string {
                                                                                                                                                          
 `
 
-	return fmt.Sprintf("%s%s%s", colorGreen, b, colorReset)
+	return fmt.Sprintf("%s%s%s", colorRed, b, colorReset)
 }
 
 // The ASCII font type: RubiFont and Orge font type
