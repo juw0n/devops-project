@@ -3,13 +3,13 @@ kind: Config
 build:
   local: {}
   artifacts:
-  - image: dftd/telnet-server
+  - image: devops-vm/telnet-server
 test:
-- image: dftd/telnet-server
+- image: devops-vm/telnet-server
   custom:
   - command: go test ./... -v
   structureTests:
-  - ./container-tests/command-and-metadata-test.yaml
+  - container-tests/command-and-metadata-test.yaml
 deploy:
   kubectl:
     manifests:

@@ -87,3 +87,20 @@ To make sure your locally built image is accessible, build the image inside Mini
 
 Scaling a Pod (To scale the deployment to 3)
 ==> kubectl scale --current-replicas=2 --replicas=3 deployment/telnet-server
+
+
+### Deploying Code with CI/CD Pipelines
+CI and CD are software development methodologies that describe the way code is built, tested, and delivered usually via a version control system. The CI steps cover the testing and building of code and configuration changes, while the CD steps automate the deployment (or delivery) of new code.
+When source code changes occur, CI/CD pipelines are typically set up to detect them and initiate a sequence of actions to deploy the changes to a development and or production environment on a virtual machine (VM) or a Kubernetes cluster.
+
+The testing procedures typically include security scans, unit tests, and integration tests to ensure that the application operates as intended, whether in isolation or in conjunction with other components in the stack. Security scans typically look for known vulnerabilities in the application's software dependencies or for vulnerable base container images that it is importing. Following the testing procedures, the new artefact(container image) is created and uploaded to a shared repository so that the CD stage can access it.
+During the CD step, artifact(container image) is extracted from a repository and subsequently deployed, typically to production or development infrastructure. CDs can use different strategies to release code. These strategies are usually either 
+1. Canary(rolls out new code so only a small subset of users can access it), 
+2. Rolling(deploys new codes one by one, alongside the current code in production, until it is fully released.), or 
+3. Blue-Green(a production service (blue) takes traffic while the new service (green) is tested. If the green code is operating as expected, the green service will replace the blue service, and all customer requests will funnel through it).
+
+Following a successful deployment, the new code needs to be observed in a monitoring step to ensure that nothing has escaped the CI process.
+#### Setting Up My Pipeline
+For creating pipeline for this project, i will be using two tools:
+i. Skaffold: For continuous development for Kubernetes native applications. (https://skaffold.dev/docs/install/)
+ii. Container-structure-test: This command-line tool verifies the structure of the container image after it has been created. It can verify whether a particular file exists or run a command and check the results to see if the image was built correctly. It can also be used to confirm that the ports and environment variables that was provide in a Dockerfile were included in the container image. (https://github.com/GoogleContainerTools/container-structure-test/)
