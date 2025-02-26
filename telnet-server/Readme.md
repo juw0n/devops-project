@@ -101,7 +101,27 @@ During the CD step, artifact(container image) is extracted from a repository and
 
 Following a successful deployment, the new code needs to be observed in a monitoring step to ensure that nothing has escaped the CI process.
 #### Setting Up My Pipeline
-For creating pipeline for this project, i will be using two tools:
+For creating pipeline for this project, I will be using two tools:
 1. Skaffold: For continuous development for Kubernetes native applications. (https://skaffold.dev/docs/install/)
 2. Container-structure-test: This command-line tool verifies the structure of the container image after it has been created. It can verify whether a particular file exists or run a command and check the results to see if the image was built correctly. It can also be used to confirm that the ports and environment variables that was provide in a Dockerfile were included in the container image. (https://github.com/GoogleContainerTools/container-structure-test/)
 
+===========================================================
+First I install the skaffold and Container-structure-test inside the directory where the yaml files live.
+The skaffold.yaml file describes how to build, test, and deploy your application and it usually live in the root of the project directory where the dockerfile live under version control. 
+To run start the pipeline
+==> Ensure kubernetes cluster is running (minikube)
+==> skaffold dev --cleanup=false
+==> minikube tunnel => command to access the telnet-server application.
+==> kubectl get svc telnet-server 
+==> telnet <service-IP> <service-Port>
+
+==> make code change by changing the ASCII text colour in the banner.go file to see how skaffold watch for change and initialise the CI/CD pipeline upon any change.
+
+#### Testing a Rollback
+Check the rollout history on kubernetes
+==> kubectl rollout history deployment telnet-server
+To make Kubernetes to record the changes, add the <--record> flag when running <kubectl apply> to makes Kubernetes record which command triggered
+the deploy.
+
+To roll to previous version (e.g version 5)
+==> kubectl rollout undo deployment telnet-server --to-revision=5
