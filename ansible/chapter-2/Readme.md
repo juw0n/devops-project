@@ -52,18 +52,18 @@ PS: the the site.yml file, uncomment the chp-2 lines so Ansible can execute the 
 #### Execution
 if the VM is not running, navigate the the vagrant folder and run
 ```
-    vagrant up
+vagrant up
 ```
 or if the VM is still running, run
 ```
-    vagrant provision
+vagrant provision
 ```
 to update the VM by executing the ansible tasks.
 
 #### Testing User and Group Permissions
  log in to the VM:
  ```
-    vagrant ssh
+vagrant ssh
 ```
 You should be logged in as the vagrant user, which is the default user
 Vagrant creates.
@@ -75,9 +75,9 @@ getent passwd jaywon
 
 verify group was created by running
 ```
-    getent group developers
+getent group developers
 ```
-check the file persmission using the vagrant user should give error
+check the file permission using the vagrant user should give error
 ```
 $ ls -al /opt/engineering/
 ls: cannot open directory '/opt/engineering/': Permission denied
