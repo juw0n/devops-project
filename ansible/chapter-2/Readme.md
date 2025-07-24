@@ -1,21 +1,25 @@
 ### USING ANSIBLE TO MANAGE PASSWORDS, USERS, AND GROUPS
-Users and passwords are the building blocks of identity management, while groups allow you to manage a collection of users and control access to files, directories, and commands.
+Managing users, passwords, and groups is fundamental to system identity and access control. Groups simplify permissions management by grouping users and assigning collective access to files, directories, and commands.
 
 #### Enforcing Complex Passwords
 
-Enforcing complicated passwords on all hosts that users can access is necessary because letting users choose a strong password can lead to trouble.
-We use code to enforce strong passwords for all users.
+Letting users create their own passwords can lead to weak security.
+We use _Ansible automation_ to enforce strong, complex passwords across all hosts.
 
-Ansible modules are units of code that can control system resources or execute system commands on an OS, such as enabling a firewall, managing users, or installing software. Ansible provides a module library that you can execute directly on remote hosts or through playbooks.
-e.g., `modules are`: package, lineinfile, copy, apt (for ubuntu), user, group, and file etc
+Ansible provides modules, which are code units that interact with system resources or execute system commands on an OS, such as enabling a firewall, managing users, or installing software. Ansible provides a module library that you can execute directly on remote hosts or through playbooks.
+Common modules include:
+- package – for software installation
+- lineinfile – for editing files line-by-line
+- copy, user, group, file, and apt – for system management
 
-Similar to modules are plugins, which are pieces of code that extend core Ansible functionality. Ansible uses a plugin architecture to enable a rich, flexible, and expandable feature set.
+Similar to modules are plugins, which are pieces of code that extend core Ansible functionality which enable a rich, flexible, and expandable feature set.
 
-To ensure that every user has a strong password, we employ code. To accomplish this, we install a linux plug-in called ***Pluggable Authentication Modules (PAM)***, a user authentication framework used by the majority of Linux distributions, using an Ansible task.
-The PAM module's pam_pwquality plug-in is in charge of creating complex passwords. This module verifies passwords according to specified criteria.
+#### ⚙️ PAM & pam_pwquality
+To enforce password complexity, we configure Pluggable Authentication Modules (PAM) using Ansible. we install a linux plug-in called ***Pluggable Authentication Modules (PAM)***, a user authentication framework used by the majority of Linux distributions, using an Ansible task.
+The pam_pwquality plugin, part of the PAM stack, verifies password strength according to defined policies or specified criteria.
 
 Ansible tasks should start with a name declaration that defines their goal. Then the Ansible package module, which performs the software installation. The package module usually requires to set two parameters: **name and state**. The package name (which must be present in the Linux Distro repository, i.e., found in the Ubuntu repository) and the state should be present.
-***To remove a package, set the state to absent***. If you install the package (present) and then delete the task from Ansible, the package will still be installed on the next provision. You would have to explicitly set the package to absent if you wanted the host to represent your desired state.
+***To remove a package, set the state to absent***.
 
 #### Configuring pam_pwquality to Enforce a Stricter Password Policy
 
@@ -38,56 +42,55 @@ To create and manage users and groups using Ansible, you use the User and group 
 #### Password generation
 I used a combination of two command line applications, pwgen and mkpasswd, to create the complex password. The pwgen command can generate secure passwords, and the mkpasswd command can generate passwords using different hashing algorithms. The pwgen application is provided by the pwgen package, and the mkpasswd application is provided by a package named whois. Together, these tools can generate the hash that Ansible and Linux expect.
 
-Linux stores password hashes in a file called shadow. On an Ubuntu system, the password hashing algorithm is SHA-512 by default. To create the SHA-512 hash for Ansible’s user module, i used the following command on the Host Ubuntu:
+To create the SHA-512 hash for Ansible’s user module, i used the following command on the Host Ubuntu:
 ```
-$ sudo apt update
-$ sudo apt install pwgen whois
-$ pass=`pwgen --secure --capitalize --numerals --symbols 12 1`
-$ echo $pass | mkpasswd --stdin --method=sha-512; echo $pass
+sudo apt update
+sudo apt install pwgen whois
+pass=`pwgen --secure --capitalize --numerals --symbols 12 1`
+echo $pass | mkpasswd --stdin --method=sha-512; echo $pass
 ```
 
-The last command display two output lines, the hash password and the real password for jaywon user.
+The last command display two output lines,
+* The first output is the SHA-512 hash
+* The second is the plaintext password
+
+> Use the hash in your Ansible task.
 
 PS: the the site.yml file, uncomment the chp-2 lines so Ansible can execute the tasks.
 
 #### Execution
-if the VM is not running, navigate the the vagrant folder and run
+1.Start the VM (if off): navigate the the vagrant folder and run
 ```
 vagrant up
 ```
-or if the VM is still running, run
+💡 Ensure that chp-2 tasks in site.yml are uncommented before running provision.
+2. Re-provision the VM (if already running):
 ```
 vagrant provision
 ```
 to update the VM by executing the ansible tasks.
 
-#### Testing User and Group Permissions
- log in to the VM:
+#### Verifying User, Group, and Permissions
+SSH or log into the VM:
  ```
 vagrant ssh
 ```
 You should be logged in as the vagrant user, which is the default user
 Vagrant creates.
 
-verify user was created by running
+Check if the user and group were created:
 ```
 getent passwd jaywon
-```
-
-verify group was created by running
-```
 getent group dev-team
 ```
-check the file permission using the vagrant user should give error
+Try accessing restricted files as vagrant user:
 ```
-$ ls -al /opt/engineering/
-ls: cannot open directory '/opt/engineering/': Permission denied
-
-$ cat /opt/engineering/private-info.txt
-cat: /opt/engineering/private-info.txt: Permission denied
+ls -al /opt/engineering/
+cat /opt/engineering/private-info.txt
 ```
-To switch to the authorized user i.e jaywon, use
+You should see "Permission denied."
+Switch to the authorized user:
 ```
 sudo su - jaywon
 ```
-then try the file permission again
+Now retry the file access, it should succeed.
