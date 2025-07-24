@@ -6,30 +6,32 @@ Managing users, passwords, and groups is fundamental to system identity and acce
 Letting users create their own passwords can lead to weak security.
 We use _Ansible automation_ to enforce strong, complex passwords across all hosts.
 
-Ansible provides modules, which are code units that interact with system resources or execute system commands on an OS, such as enabling a firewall, managing users, or installing software. Ansible provides a module library that you can execute directly on remote hosts or through playbooks.
+Ansible provides modules, which are code units that interact with system resources or execute system commands on an OS, such as enabling a firewall, managing users, or installing software. 
 Common modules include:
 - package – for software installation
 - lineinfile – for editing files line-by-line
 - copy, user, group, file, and apt – for system management
 
-Similar to modules are plugins, which are pieces of code that extend core Ansible functionality which enable a rich, flexible, and expandable feature set.
+Ansible also uses plugins, which are pieces of code that extend its functionality, enabling a rich, flexible, and expandable feature set. (e.g., connection, callback, cache). 
 
 #### ⚙️ PAM & pam_pwquality
-To enforce password complexity, we configure Pluggable Authentication Modules (PAM) using Ansible. we install a linux plug-in called ***Pluggable Authentication Modules (PAM)***, a user authentication framework used by the majority of Linux distributions, using an Ansible task.
+To enforce password complexity, we configure **Pluggable Authentication Modules (PAM)** using Ansible.
 The pam_pwquality plugin, part of the PAM stack, verifies password strength according to defined policies or specified criteria.
 
-Ansible tasks should start with a name declaration that defines their goal. Then the Ansible package module, which performs the software installation. The package module usually requires to set two parameters: **name and state**. The package name (which must be present in the Linux Distro repository, i.e., found in the Ubuntu repository) and the state should be present.
-***To remove a package, set the state to absent***.
+We use the package module to install required software, and the lineinfile module to edit configuration files. The state parameter controls installation behavior:
+* present ensures the package is installed
+* absent ensures it's removed
+
+> ⚠️ If you delete the Ansible task but don’t set the state to absent, the package remains on the host.
 
 #### Configuring pam_pwquality to Enforce a Stricter Password Policy
 
-A file named /etc/security/pwquality.conf (Policy Configuration) handles the configuration of the pam_pwquality module.
-This file is where the Ansible task makes the necessary changes to validate passwords. All you need to do is change one line in that file. A common way to edit a line using Ansible is with the `lineinfile module`, which allows you to change a line in a file or check whether a line exists.
+This file defines password policy settings like minimum length, character types, and retry limits.
+With Ansible’s lineinfile module, we can:
+* Ensure specific configuration lines are present
+* Modify or append lines as needed
 
-
-Tasks in Ansible are run in order, for example, you need to make sure that a group exists first before making reference to the group. If you tried to reference the group before creating it, you would get an error message stating that the devops group doesn’t exist, and the provisioning would fail.
-
-> PS: The negative values in the configuration line above inform pam_pwquality that it must have at least “one of” for that category. 
+Tasks in Ansible are run in order, you need to make sure that a group exists first before making reference to the group. 
 
 #### Ansible User Module
 In Linux systems, there are three types of user
@@ -40,7 +42,7 @@ In Linux systems, there are three types of user
 To create and manage users and groups using Ansible, you use the User and group Module
 
 #### Password generation
-I used a combination of two command line applications, pwgen and mkpasswd, to create the complex password. The pwgen command can generate secure passwords, and the mkpasswd command can generate passwords using different hashing algorithms. The pwgen application is provided by the pwgen package, and the mkpasswd application is provided by a package named whois. Together, these tools can generate the hash that Ansible and Linux expect.
+I used a combination of two command line applications, pwgen and mkpasswd, to create the complex password. The pwgen command can generate secure passwords, and the mkpasswd command can generate passwords using different hashing algorithms.
 
 To create the SHA-512 hash for Ansible’s user module, i used the following command on the Host Ubuntu:
 ```
@@ -49,7 +51,6 @@ sudo apt install pwgen whois
 pass=`pwgen --secure --capitalize --numerals --symbols 12 1`
 echo $pass | mkpasswd --stdin --method=sha-512; echo $pass
 ```
-
 The last command display two output lines,
 * The first output is the SHA-512 hash
 * The second is the plaintext password
