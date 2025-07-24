@@ -24,20 +24,19 @@ Get the vagrantFile for ubuntu jammy64 by running
 vagrant init ubuntu/jammy64 --box-version 20241002.0.0
 
 ### Basic Ansible terms:
-1. Playbook  A playbook is a collection of ordered tasks or roles that you
+1. **_Playbook:_** A playbook is a collection of ordered tasks or roles that you
 can use to configure hosts.
-2. Control node   A control node is any Unix machine that has Ansible
+2. **_Control node:_** A control node is any Unix machine that has Ansible
 installed on it. You will run your playbooks or commands from a control
 node, and you can have as many control nodes as you like.
-3. Managed node: A remote system, or host, that Ansible controls.
-4. Inventory  An inventory is a file that contains a list of hosts or groups of
-hosts that Ansible can communicate with.
-Module  A module encapsulates the details of how to perform certain
+3. **_Managed node:_** A remote system, or host, that Ansible controls.
+4. **_Inventory:_** An inventory is a file that contains a list of hosts or groups of hosts that Ansible can communicate with.
+5. **_Module:_** A module encapsulates the details of how to perform certain
 actions across operating systems, such as how to install a software pack-
 age. Ansible comes preloaded with many modules.
-5. Task  A task is a command or action (such as installing software or
+6. **_Task:_** A task is a command or action (such as installing software or
 adding a user) that is executed on the managed host.
-6. Role  A role is a group of tasks and variables that is organized in a
+7. **_Role:_** A role is a group of tasks and variables that is organized in a
 standardized directory structure, defines a particular purpose for the
 server, and can be shared with other users for a common goal. A typi-
 cal role could configure a host to be a database server. This role would

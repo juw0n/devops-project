@@ -1,23 +1,27 @@
-- name: Ensure group "devops" exists
+- name: Ensure group "dev-team" exists
   group:
-    name: devops
+    name: dev-team
     state: present
 
-- name: Create the user 'jaywon' and assign to 'devops' group
+- name: Create the user 'jaywon'
   user:
     name: jaywon
-    groups: devops
-    append: yes
     shell: /bin/bash
-    state: present
-    password: $6$DXJHVHIaZlk8SrZ7$bemd43xJ5h7fWP5t8sevg2zdolszPUHS5iDrTuD8OT7Jio.Fv1m/2F8GItOJxvcaT122QBpiUe645frYfuZ//0
+    password: $6$ywsmNgg54uveb1I8$UNUzewUghRAqtMPiX6Nz2ViJ5nLPcUrfH8rhFPFcbfbmNJ/t/7PTzD5nwJ/3/trk0xHAgJLZd5WKF.OEOlv5Y/
+    append: yes
+
+- name: Assign 'jaywon' to the 'dev-team' group
+  user:
+    name: jaywon
+    groups: dev-team
+    append: yes
 
 - name: Create a directory named 'engineering'
   file:
     path: /opt/engineering
     state: directory
     owner: root
-    group: devops
+    group: dev-team
     mode: '0750'
 
 # - name: Force user 'jaywon' to change password on first login
@@ -28,5 +32,5 @@
     path: "/opt/engineering/private-info.txt"
     state: touch
     owner: jaywon
-    group: devops
+    group: dev-team
     mode: '0770'
