@@ -39,11 +39,12 @@ To create and manage users and groups using Ansible, you use the User and group 
 I used a combination of two command line applications, pwgen and mkpasswd, to create the complex password. The pwgen command can generate secure passwords, and the mkpasswd command can generate passwords using different hashing algorithms. The pwgen application is provided by the pwgen package, and the mkpasswd application is provided by a package named whois. Together, these tools can generate the hash that Ansible and Linux expect.
 
 Linux stores password hashes in a file called shadow. On an Ubuntu system, the password hashing algorithm is SHA-512 by default. To create the SHA-512 hash for Ansible’s user module, i used the following command on the Host Ubuntu:
-
-==> $ sudo apt update
-==> $ sudo apt install pwgen whois
-==> $ pass=`pwgen --secure --capitalize --numerals --symbols 12 1`
-==> $ echo $pass | mkpasswd --stdin --method=sha-512; echo $pass
+```
+$ sudo apt update
+$ sudo apt install pwgen whois
+$ pass=`pwgen --secure --capitalize --numerals --symbols 12 1`
+$ echo $pass | mkpasswd --stdin --method=sha-512; echo $pass
+```
 
 The last command display two output lines, the hash password and the real password for jaywon user.
 
@@ -75,15 +76,15 @@ getent passwd jaywon
 
 verify group was created by running
 ```
-getent group developers
+getent group dev-team
 ```
 check the file permission using the vagrant user should give error
 ```
 $ ls -al /opt/engineering/
 ls: cannot open directory '/opt/engineering/': Permission denied
 
-$ cat /opt/engineering/private.txt
-cat: /opt/engineering/private.txt: Permission denied
+$ cat /opt/engineering/private-info.txt
+cat: /opt/engineering/private-info.txt: Permission denied
 ```
 To switch to the authorized user i.e jaywon, use
 ```
