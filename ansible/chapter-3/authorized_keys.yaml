@@ -2,4 +2,4 @@
   authorized_key:
     user: jaywon
     state: present
-    key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/devops_vm.pub') }}"
+    key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/dev_vm.pub') }}"
