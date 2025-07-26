@@ -7,5 +7,5 @@ Cmnd_Alias RESTART_GREETING = /bin/systemctl restart greeting, /bin/systemctl re
 Host_Alias LOCAL_VM = {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}
 
 # User specification
-%devops LOCAL_VM = (root) NOPASSWD: START_GREETING, STOP_GREETING, RESTART_GREETING, sudoedit {{ greeting_application_file }}, sudoedit /opt/engineering/greeting.py
- 
+%dev-team LOCAL_VM = (root) NOPASSWD: START_GREETING, STOP_GREETING, RESTART_GREETING, sudoedit {{ greeting_application_file }}
+# sudoedit /opt/engineering/greeting.py

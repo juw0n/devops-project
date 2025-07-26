@@ -2,10 +2,10 @@
 - set_fact:
     greeting_application_file: "/opt/engineering/greeting.py"
 
-- name: Create sudoers file for devops group
+- name: Create sudoers file for dev-team group
   template:
-    src: "../ansible/templates/devops.j2"
-    dest: "/etc/sudoers.d/devops"
+    src: "../ansible/templates/dev-team.j2"
+    dest: "/etc/sudoers.d/dev-team"
     validate: 'visudo -cf %s'
     owner: root
     group: root

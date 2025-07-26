@@ -11,7 +11,7 @@
   copy:
     src: "../ansible/chapter-4/{{ item }}"
     dest: "/opt/engineering/{{ item }}"
-    group: devops
+    group: dev-team
     mode: '0750'
   loop:
     - greeting.py
