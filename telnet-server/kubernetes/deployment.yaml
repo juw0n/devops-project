@@ -23,7 +23,7 @@ spec:
         prometheus.io/port:   '9000'
     spec:
       containers:
-      - image: devops-vm/telnet-server:v1
+      - image: dev-vm/telnet-server:v1
         imagePullPolicy: IfNotPresent
         name: telnet-server
         resources:
