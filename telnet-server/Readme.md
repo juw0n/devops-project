@@ -2,7 +2,7 @@
 
 A `container` is a lightweight, isolated, and portable runtime environment created from a `container image`. It packages an application with its dependencies, ensuring consistency across development, testing, and production environments.
 When a container starts, a writable layer is added to manage file changes during runtime.
-Containers use Linux n`amespaces` and `cgroups` to provide isolation:
+Containers use Linux `namespaces` and `cgroups` to provide isolation:
 - **Namespaces** restrict what a container can see (e.g., filesystems, processes, networks).
 - **Cgroups** restrict what a container can use (e.g., CPU, memory).
 
@@ -45,23 +45,37 @@ docker ps
 docker ps -a
 ```
 To stop a container
-```docker container stop <container-name>```
+```
+docker container stop <container-name>
+```
 To run a command inside a container or interact with a container, as if you were logged in to a terminal session.
-```docker exec <container-name> <command>```
+```
+docker exec <container-name> <command>
+```
 To remove a stopped container
-```docker rm <container-name>```
+```
+docker rm <container-name>
+```
 To remove a docker image
-```docker rmi <container-name>```
+```
+docker rmi <container-name>
+```
 ==> To get low-level information about docker object from a container in json format
-```docker inspect <container-name>```
+```
+docker inspect <container-name>
+```
 To get the history record of a docker image
-```docker history <image-name or repository-name>```
+```
+docker history <image-name or repository-name>
+```
 To get a real-time update on the resources a container is using (like top in linux):
-```docker stats --no-stream <container-name>```
+```
+docker stats --no-stream <container-name>
+```
 To see all the logs in a container
-```docker logs <container-name>```
-
-
+```
+docker logs <container-name>
+```
 
 ### Orchestrating with K8s
 K8s is the standard in container orchestration. One or more worker nodes and one or more control plane nodes make up a K8s cluster. 
@@ -112,25 +126,50 @@ you’re telling your local docker CLI:
 * “Hey, instead of building/running images on my local Docker Desktop, send them to the Docker daemon inside Minikube.”
 * This is how you can build an image and have it instantly available to the Kubernetes cluster without pushing it to a registry.
 
-==> docker build -t dev-vm/telnet-server:v1 .
+```
+docker build -t dev-vm/telnet-server:v1 .
+```
+```
+kubectl apply -f kubernetes/
+```
+```
+kubectl get all
+```
+To access the server, i used minikube tunnel command to expose the LoadBalancer service. The tunnel subcommand runs in the foreground, so it should be run in a terminal that won’t get closed.
+```
+minikube tunnel
+```
+with the tunnel up, I need to get the new external IP address
+for the LoadBalancer Service
+```
+kubectl get svc telnet-server
+```
+In another terminal that is not running the tunnel, I use the telnet client command with the new IP address to access the telnet-server.
+```
+telnet <External-IP> <server-Port>
+```
+ Scaling a Pod (To scale the deployment to 3)
+```
+kubectl scale deployment telnet-server --replicas=3
+```
 
-Scaling a Pod (To scale the deployment to 3)
-==> kubectl scale --current-replicas=2 --replicas=3 deployment/telnet-server
+#### Deploying Code with CI/CD Pipelines
+`CI` (Continuous Integration) automates the building, testing, and validation of code changes.
+`CD` (Continuous Delivery/Deployment) automates releasing these changes to environments like VMs or Kubernetes clusters.
 
+Typical CI/CD pipeline flow:
 
-For my setup, i build/created and ran the image and container in Docker desktop
+1. Detect changes in source code from version control.
+2. Test the changes (security scans, unit tests, integration tests).
+3. Build & store artifacts (e.g., container images) in a shared repository.
+4. Deploy artifacts to dev or prod environments using strategies such as:
+    * Canary – release to a small subset of users first.
+    * Rolling – gradually replace old versions with new ones.
+    * Blue-Green – switch traffic from old (blue) to new (green) after testing. (a production service (blue) takes traffic while the new service (green) is tested. If the green code is operating as expected, the green service will replace the blue service, and all customer requests will funnel through it)
 
+![CI_CD Deployment Strategy]()
 
-
-### Deploying Code with CI/CD Pipelines
-CI and CD are software development methodologies that describe the way code is built, tested, and delivered usually via a version control system. The CI steps cover the testing and building of code and configuration changes, while the CD steps automate the deployment (or delivery) of new code.
-When source code changes occur, CI/CD pipelines are typically set up to detect them and initiate a sequence of actions to deploy the changes to a development and or production environment on a virtual machine (VM) or a K8s cluster.
-
-The testing procedures typically include security scans, unit tests, and integration tests to ensure that the application operates as intended, whether in isolation or in conjunction with other components in the stack. Security scans typically look for known vulnerabilities in the application's software dependencies or for vulnerable base container images that it is importing. Following the testing procedures, the new artefact(container image) is created and uploaded to a shared repository so that the CD stage can access it.
-During the CD step, artifact(container image) is extracted from a repository and subsequently deployed, typically to production or development infrastructure. CDs can use different strategies to release code. These strategies are usually either 
-1. Canary(rolls out new code so only a small subset of users can access it), 
-2. Rolling(deploys new codes one by one, alongside the current code in production, until it is fully released.), or 
-3. Blue-Green(a production service (blue) takes traffic while the new service (green) is tested. If the green code is operating as expected, the green service will replace the blue service, and all customer requests will funnel through it).
+This process ensures changes are reliable, secure, and quickly delivered.
 
 Following a successful deployment, the new code needs to be observed in a monitoring step to ensure that nothing has escaped the CI process.
 #### Setting Up My Pipeline
