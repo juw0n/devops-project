@@ -167,7 +167,7 @@ Typical CI/CD pipeline flow:
     * Rolling – gradually replace old versions with new ones.
     * Blue-Green – switch traffic from old (blue) to new (green) after testing. (a production service (blue) takes traffic while the new service (green) is tested. If the green code is operating as expected, the green service will replace the blue service, and all customer requests will funnel through it)
 
-![CI_CD Deployment Strategy](telnet-server/CI_CD Deployment Strategy.png)
+![CI_CD Deployment Strategy](./CI_CD_Deployment_Strategy.png)
 
 This process ensures changes are reliable, secure, and quickly delivered.
 
