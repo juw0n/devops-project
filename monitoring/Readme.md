@@ -1,18 +1,22 @@
-Observability is an attribute of a system, rather than something you do. It is a system’s ability to be monitored, tracked, and analyzed. Any application worthy of production should be observable.
-Analysing system outputs such as metrics, traces, and logs is how you accomplish this:
-1. Metrics: typically comprise data collected over time that offers important information about the performance and/or health of an application. 
-2. Traces: to give a comprehensive picture, trace a request as it moves through many services.
-3. Logs: offer an audit trail of past errors or occurrences that can be utilised for troubleshooting.
+Observability is an attribute of a system, rather than something you do. It is a system’s ability to be monitored, tracked, and analyzed. 
+The main goal in monitoring and observing a system is to discern what it is doing, internally. This is achieve by analyzing system outputs like metrics, traces, and logs. Any application worthy of production should be observable.
+1. Metrics: are numerical measurements that quantify system performanceover a period of time.
+2. Traces: are a way to record the actions a user performs while using your application or service, i.e. trace a request as it moves through many services.
+3. Logs: are detailed records of events. They provide context and details about specific actions, errors, or state changes and are usually utilised for troubleshooting.
 
 The degree of architectural complexity you are working with will ultimately determine what, how, and how much to observe.
 
 Monitoring is any activity that involves keeping track of, evaluating, and sending out alerts based on predetermined criteria in order to determine the present status of a system. 
 Applications must report metrics that can provide a narrative about the actions of the system at any given time in order to measure its condition.
+PS: Always consider the “What?” and “Why?” when designing metrics and monitoring solutions for your applications. Avoid metrics or alerts
+that do not provide value to stakeholders and engineers.
 
 The monitoring applications used for this project are:
 1. Prometheus: a metric collection application that queries metric data with its powerful built-in query language. It can set alerts for those metrics as well.
 2. Alertmanager: receives alerts from Prometheus and determines their path depending on user-configurable parameters. Usually, the routes are notification.
 3. Grafana: offers a user-friendly interface for creating and viewing graphs and dashboards using the data that Prometheus supplies.
+
+![monitoring-system-stack](./monitoring/monitoringStacks.png)
 
 #### Installing the Monitoring Stack
 

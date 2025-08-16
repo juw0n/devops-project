@@ -1,16 +1,17 @@
-apiVersion: skaffold/v2beta19
+apiVersion: skaffold/v4beta13
 kind: Config
 build:
-  local: {}
   artifacts:
-  - image: devops-vm/telnet-server
+    - image: dev-vm/telnet-server
+  local: {}
 test:
-- image: devops-vm/telnet-server
-  custom:
-  - command: go test ./... -v
-  structureTests:
-  - container-tests/command-and-metadata-test.yaml
-deploy:
-  kubectl:
-    manifests:
+  - image: dev-vm/telnet-server
+    custom:
+      - command: go test ./... -v
+    structureTests:
+      - container-tests/command-and-metadata-test.yaml
+manifests:
+  rawYaml:
     - kubernetes/*
+deploy:
+  kubectl: {}
