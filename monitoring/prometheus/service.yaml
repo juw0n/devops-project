@@ -7,7 +7,7 @@ metadata:
     prometheus.io/scrape: 'true'
     prometheus.io/port:   '9090'
   labels:
-    app.kubernetes.io/name: devops-vm
+    app.kubernetes.io/name: dev-vm
     app.kubernetes.io/component: prometheus
 spec:
   selector: 

@@ -4,7 +4,7 @@ metadata:
   name: bbs-warrior
   labels:
     app: bbs-warrior
-    app.kubernetes.io/name: devops-vm
+    app.kubernetes.io/name: dev-vm
     app.kubernetes.io/component: bbs-warrior
 spec:
   schedule: "*/1 * * * *"

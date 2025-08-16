@@ -8,7 +8,7 @@ data:
     apiVersion: 1
 
     providers:
-      - name: 'devops-vm-dashboards'
+      - name: 'dev-vm-dashboards'
         orgId: 1
         # <string> name of the dashboard folder.
         # <string> folder UID. will be automatically generated if not specified

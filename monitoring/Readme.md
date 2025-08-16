@@ -21,15 +21,43 @@ The monitoring applications used for this project are:
 #### Installing the Monitoring Stack
 
 cd to the root directory of the project and run
-==> kubectl apply -R -f monitoring/
+```
+kubectl apply -R -f monitoring/
+```
 chek that the deployment are up and running:
-==> kubectl get all -n monitoring
-Access the stacks using
-==> minikube IP:Dynamic service port for Prometheus
-==> minikube IP:Dynamic service port for Grafana
-==> minikube IP:Dynamic service port for Alertmanager
+```
+kubectl get all -n monitoring
+```
 
-Common metric patterns are
+Confirming the stacks are runnig as expected:
+**minikube IP:Dynamic service port for Prometheus**
+**minikube IP:Dynamic service port for Grafana**
+**minikube IP:Dynamic service port for Alertmanager**
+`OR`
+```
+minikube -n monitoring service grafana-service
+minikube -n monitoring service prometheus-service
+minikube -n monitoring service alertmanager-service
+```
+The bbs-warrior application is a Kubernetes CronJob that runs every minute and creates a random number of connections and errors to the telnetserver application.
+To make sure bbs-warrior is active and installed correctly:
+```
+kubectl get cronjobs.batch -l app=bbs-warrior
+kubectl get pods -l app=bbs-warrior
+```
+
+**Common metric patterns are:**
 1. Golden Signals: (latency, traffic, errors, and saturation)--> help monitor microservices.
+    * *Latency* is the time it takes for a service to process a request. 
+    * *Traffic* is how many requests an application is receiving.
+    * *Errors* refers to the number of errors an application is       reporting (such as a web server reporting 500s). 
+    * *Saturation* is how full a service is. 
 2. RED: (Rate, Error, Duration) --> help monitor microservices.
-3. USE: (Utilisation, Saturation, Errors) --> for quickly discovering performance issues based on underlying resources (infrastructure) rather than the microservices that run on them
+    * *Rate* is the number of requests per second a service is receiving 
+    * *Error* is the number of failed requests per second (such as connection failures that a client experiences) that the service encounters 
+    * *Duration* is the amount of time it takes to serve a request, or how long it takes to return data to client.
+takes to return the data requested from your service to the client
+3. USE: (Utilisation, Saturation, Errors) --> for quickly discovering performance issues based on underlying resources (infrastructure) rather than the microservices that run on them.
+    * *Utilization* is the average time the resource is busy doing work
+    * *Saturation* can be thought of as extra work the system could not get to, such as happens with a busy host that is queueing up connections to serve traffic. 
+    * *Errors* are the number of errors (such as network collisions or disk IO errors) a system is having.
