@@ -16,7 +16,7 @@ The monitoring applications used for this project are:
 2. Alertmanager: receives alerts from Prometheus and determines their path depending on user-configurable parameters. Usually, the routes are notification.
 3. Grafana: offers a user-friendly interface for creating and viewing graphs and dashboards using the data that Prometheus supplies.
 
-![monitoring-system-stack](./monitoring/monitoringStacks.png)
+![monitoring-system-stack](./monitoringStacks.png)
 
 #### Installing the Monitoring Stack
 
