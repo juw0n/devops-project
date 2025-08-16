@@ -61,3 +61,11 @@ takes to return the data requested from your service to the client
     * *Utilization* is the average time the resource is busy doing work
     * *Saturation* can be thought of as extra work the system could not get to, such as happens with a busy host that is queueing up connections to serve traffic. 
     * *Errors* are the number of errors (such as network collisions or disk IO errors) a system is having.
+
+***The telnet-server Observability Dashboard***
+
+![grafanaDashboard](./grafana1.png)
+![grafanaDashboard](./grafana2.png)
+![grafanaDashboard](./grafana3.png)
+![prometheusDashboard](./prometheus1.png)
+![prometheusDashboard](./prometheus2.png)
